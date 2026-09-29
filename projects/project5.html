@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Level of Dimensions | Tiago Martins</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+
+  <section class="project-page">
+
+    <!-- BACK -->
+    <a href="../index.html" class="back-link">← Back to Portfolio</a>
+
+    <!-- HEADER -->
+    <div class="project-header">
+      <h1>Level of Dimensions</h1>
+      <p class="project-subtitle">
+        A solo-developed horror puzzle game where you wake up shrunk to toy-size inside a huge,
+        dark house — and a single flashlight is your only key, your only weapon, and your only
+        way to see the world.
+      </p>
+
+      <div class="project-meta">
+        <span>Unity / C#</span>
+        <span>Solo Developer</span>
+        <span>Horror / Puzzle</span>
+      </div>
+    </div>
+
+    <!-- HOW TO PLAY -->
+    <div class="project-section">
+      <h2>How to Play</h2>
+      <p>
+        You're dreaming, but you don't know it — shrunk down Toy Story-small inside a massive
+        house, one room per level. Mannequins patrol the dark, watching a 45° cone ahead of them;
+        get seen and they'll come for you. Your flashlight is the answer to almost everything: hit
+        a patrolling mannequin with it and it's blinded, but keep it on too long and you run out
+        of energy. In Level 1, you're hunting five hidden keys to open the way out — one of them
+        only appears if you notice a painting on the wall worth aiming your light at, revealing a
+        secret door. Grab the last key and an NPC notices — a portal opens, and you're through to
+        Level 2.
+      </p>
+      <p>
+        Level 2 changes the rules: the same flashlight now reveals platforms that are otherwise
+        invisible, so crossing a gap means sweeping your light across the dark to find out where
+        to jump. You've also picked up a ranged weapon by now — enemies shoot back, and you have
+        three lives to lose before it's over. Find the keys, read what's scattered around each
+        level, and find the last portal to finish the game. Turns out it was all a dream.
+      </p>
+    </div>
+
+    <!-- DEMO VIDEO -->
+    <div class="showreel-video">
+      <iframe
+        src="https://www.youtube.com/embed/d8uzZanIkS8"
+        title="Level of Dimensions Gameplay"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <div class="project-layout">
+      <div class="project-main">
+
+        <!-- OVERVIEW -->
+        <div class="project-section">
+          <h2>Overview</h2>
+          <p>
+            Level of Dimensions is a two-level horror puzzle game I built entirely solo — design,
+            programming, and all. Each level is a single room of a dream-house, scaled so the
+            player feels tiny against the space around them. The whole game is built around one
+            idea: your flashlight isn't just a light source, it's the mechanic the entire puzzle
+            and stealth loop runs on.
+          </p>
+        </div>
+
+        <!-- MY CONTRIBUTIONS -->
+        <div class="project-section">
+          <h2>My Contributions</h2>
+          <p>
+            Since this was a solo project, everything below — design, AI, mechanics, atmosphere,
+            and optimisation — was mine to build.
+          </p>
+          <ul class="project-list">
+            <li>
+              <strong>Patrol AI with real vision detection</strong> — built the mannequin enemies
+              as a state machine patrolling fixed routes, with a 45° forward vision cone rather
+              than omniscient player-tracking, so staying out of sight is an actual spatial
+              problem, not luck.
+            </li>
+            <li>
+              <strong>One mechanic, two puzzle types</strong> — designed the flashlight as a
+              single energy-limited system reused for two different purposes across the two
+              levels: in Level 1 it blinds and stuns a mannequin caught in the beam, and in
+              Level 2 it reveals platforms that are otherwise invisible, turning traversal into a
+              search-and-light puzzle.
+            </li>
+            <li>
+              <strong>Key &amp; objective system</strong> — built the five-key progression gate for
+              Level 1, including a hidden key that only unlocks once the player notices and aims
+              their light at a specific painting to open a secret door.
+            </li>
+            <li>
+              <strong>Level transition logic</strong> — scripted the reaction to collecting the
+              final key: an NPC registers the theft and a portal spawns, moving the player into
+              the next level without a manual trigger or loading screen.
+            </li>
+            <li>
+              <strong>Combat &amp; player mechanics (Level 2)</strong> — added a ranged projectile
+              weapon and enemies that shoot back, on top of core movement (walking, jumping) and a
+              three-life health system that takes damage from enemy hits.
+            </li>
+            <li>
+              <strong>Atmosphere &amp; performance</strong> — used post-processing and flickering
+              lights to build the horror tone, and implemented occlusion culling so the game only
+              renders what the camera can actually see, keeping a dark, effects-heavy scene
+              running smoothly.
+            </li>
+          </ul>
+        </div>
+
+        <!-- TECH FOCUS -->
+        <div class="project-section">
+          <h2>Technical Focus</h2>
+          <p>
+            State-machine patrol AI with vision-cone detection, a single resource-managed
+            mechanic (the flashlight) driving two distinct puzzle systems, ranged combat, and
+            rendering optimisation through occlusion culling and post-processing.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- SCREENSHOTS -->
+      <aside class="project-sidebar">
+        <p class="sidebar-label">Screenshots</p>
+        <div class="project-gallery">
+          <img src="../assets/level-of-dimensions/screenshots/shot1.png" alt="Level of Dimensions screenshot 1">
+          <img src="../assets/level-of-dimensions/screenshots/shot2.png" alt="Level of Dimensions screenshot 2">
+          <img src="../assets/level-of-dimensions/screenshots/shot3.png" alt="Level of Dimensions screenshot 3">
+        </div>
+      </aside>
+    </div>
+
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <img id="lightbox-img" src="" alt="">
+  </div>
+  <script>
+    document.querySelectorAll('.project-gallery img').forEach((img) => {
+      img.addEventListener('click', () => {
+        document.getElementById('lightbox-img').src = img.src;
+        document.getElementById('lightbox').classList.add('active');
+      });
+    });
+    document.getElementById('lightbox').addEventListener('click', () => {
+      document.getElementById('lightbox').classList.remove('active');
+    });
+  </script>
+
+  <!-- NOTE FOR TIAGO: written directly from your dictated description, so this should already
+       be accurate — just sanity check the wording matches how you'd explain it out loud.
+       Still needed: real screenshots in assets/level-of-dimensions/screenshots/ (the gallery
+       paths are placeholders right now), and images/level-of-dimensions.png for the card
+       thumbnail on Home/Projects.
+
+       Worth considering: this has as much real technical depth as your three Featured Case
+       Studies (patrol AI, a dual-purpose core mechanic, combat, optimisation — solo). If you
+       want, I can promote it to a fourth Featured Case Study with the full Problem/Approach/
+       Result treatment instead of leaving it in Other Projects. -->
+
+</body>
+</html>

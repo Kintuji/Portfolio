@@ -22,6 +22,29 @@
 
     const projects = [
       {
+        id: 'graveyard-mansion',
+        title: 'Graveyard Mansion',
+        image: 'images/graveyard-mansion.png',
+        status: 'Internship — Aden Interactive',
+        role: 'QA & Tools Programmer',
+        focus: 'Codebase refactor, QA leadership, and a custom runtime debug tool',
+        tags: ['Unity', 'C#', 'Tools', 'QA'],
+        featured: true,
+        badgeLabel: 'Professional Work',
+        cardCta: 'View My Work',
+        description:
+          'A top-down psychological survival horror game — my internship work focused on stabilising the codebase and building tooling to speed up the team\'s testing.',
+        challenge:
+          'A large, multi-level game with a codebase that was getting harder to maintain, and game-breaking bugs surfacing during testing that took real time to reproduce and fix.',
+        contributions: [
+          'Refactored core systems in a growing multi-level codebase so bugs were easier to isolate',
+          'Led QA by tracing critical bugs back to root cause instead of patching symptoms',
+          'Cut down game-breaking edge cases making it into builds',
+          'Built an in-game debug tool for scene travel, dialogue control, and spawning inventory items on demand',
+        ],
+        link: 'projects/project8.html',
+      },
+      {
         id: 'table-for-two',
         title: 'Table for Two',
         image: 'images/table-for-two.jpeg',
@@ -35,10 +58,10 @@
         challenge:
           'Two players moving fast, orders stacking up — the order/delivery system had to hold together under co-op chaos without desyncing state or feeling unfair.',
         contributions: [
-          'Built delivery and order flow logic',
-          'Implemented recipe timers and score decay',
-          'Worked on NPC/customer behaviour',
-          'Handled UI and game state updates'
+          'Architected order/delivery state independent of player ownership, so orders survive being handed off mid-prep',
+          'Built scoring around one shared lateness-decay curve, so timers never double-penalise the player',
+          'Built the customer NPC as a state machine driving both animation and score together',
+          'Wired the UI to read live from that state instead of tracking its own copy'
         ],
         link: 'projects/project2.html',
       },
@@ -56,10 +79,10 @@
         challenge:
           'Enemies needed to react to directional attacks and combos convincingly, without hand-scripting a response for every attack/ability combination.',
         contributions: [
-          'Built FSM-driven enemy behaviour',
-          'Implemented attack event responses',
-          'Worked on combat interaction logic',
-          'Programmed gameplay abilities'
+          'Designed enemy FSM driven by attack events, not attack type, so one system handles every move',
+          'Built block/react/retaliate responses that read the enemy\'s current state, not a fixed script',
+          'Built the shared hit-detection/stagger/retaliation layer used by both player and enemy',
+          'Wrote abilities that emit events on that same pipeline, needing no new reaction code'
         ],
         link: 'projects/project1.html',
       },
@@ -103,16 +126,17 @@
         id: 'level-of-dimensions',
         title: 'Level of Dimensions',
         image: 'images/level-of-dimensions.png',
-        status: 'School Project',
-        role: 'Gameplay Programmer',
-        focus: 'Dimensional mechanics, player interaction, level progression',
-        tags: ['Unity', 'C#', 'Puzzle'],
+        status: 'Solo Project',
+        role: 'Solo Developer',
+        focus: 'Patrol AI with vision detection, a dual-purpose flashlight mechanic, combat',
+        tags: ['Unity', 'C#', 'Horror', 'Solo Dev'],
         description:
-          'A puzzle game where players switch between dimensions to solve puzzles and progress through levels.',
+          'A solo-built horror puzzle game where a single flashlight blinds patrolling enemies in one level and reveals invisible platforms in the next.',
         contributions: [
-          'Programmed gameplay mechanics',
-          'Handled level scripting',
-          'Worked on player interaction logic'
+          'Built patrol AI with a 45° vision cone, so staying hidden is a real spatial problem',
+          'Designed the flashlight as one energy-limited mechanic reused for two puzzle types — blinding enemies, then revealing invisible platforms',
+          'Built the six-key progression system, including a hidden key unlocked by aiming light at a specific painting',
+          'Added ranged combat, a three-life health system, and occlusion culling for performance'
         ],
         link: 'projects/project5.html',
       },
@@ -244,9 +268,22 @@
             <div className="section-header">
               <p className="eyebrow">Focus</p>
               <h2>What I Do</h2>
+              <p className="section-subtitle">
+                AI in games is what I enjoy most, alongside gameplay programming more broadly —
+                and I'm increasingly interested in where that overlaps with software engineering
+                beyond games too.
+              </p>
             </div>
 
             <div className="features-grid">
+              <div className="feature-card">
+                <h3>AI Programming</h3>
+                <p>
+                  FSMs, behaviour logic, NPC decision making, enemy states,
+                  perception-style systems, and AI-driven gameplay.
+                </p>
+              </div>
+
               <div className="feature-card">
                 <h3>Gameplay Programming</h3>
                 <p>
@@ -256,18 +293,18 @@
               </div>
 
               <div className="feature-card">
-                <h3>Game AI</h3>
-                <p>
-                  FSMs, behaviour logic, NPC decision making, enemy states,
-                  perception-style systems, and AI-driven gameplay.
-                </p>
-              </div>
-
-              <div className="feature-card">
                 <h3>Systems Design</h3>
                 <p>
                   Scalable order systems, timers, progression logic, reusable managers,
                   and clean gameplay architecture.
+                </p>
+              </div>
+
+              <div className="feature-card">
+                <h3>Software &amp; AI</h3>
+                <p>
+                  Comfortable outside game engines too — C#, C++, and applications beyond games.
+                  Interested in where AI and general software engineering meet.
                 </p>
               </div>
             </div>
@@ -298,16 +335,6 @@
                 <p>
                   Building enemy behaviour using behaviour trees, blackboards, combat states,
                   and clearer AI decision logic.
-                </p>
-              </div>
-
-              <div className="current-card">
-                <span className="current-label">Internship / Unity</span>
-                <h3>Aden Interactive</h3>
-                <p>
-                  Working as a Unity developer intern, improving my production workflow,
-                  gameplay implementation skills, debugging discipline, and ability to deliver
-                  tasks in a real studio environment.
                 </p>
               </div>
             </div>
@@ -352,7 +379,15 @@
 
           <div className="project-content">
             <div className="project-topline">
-              {project.featured && <span className="project-case-study-badge">Case Study</span>}
+              {project.featured && (
+                <span
+                  className={`project-case-study-badge${
+                    project.badgeLabel ? ' professional' : ''
+                  }`}
+                >
+                  {project.badgeLabel || 'Case Study'}
+                </span>
+              )}
               <span className="project-status">{project.status || 'Project'}</span>
               <span className="project-role">{project.role || 'Game Developer'}</span>
             </div>
@@ -388,7 +423,7 @@
 
             <div className="project-actions">
               <button className="project-main-btn">
-                {project.featured ? 'Read Case Study' : 'View Project'}
+                {project.cardCta || (project.featured ? 'Read Case Study' : 'View Project')}
               </button>
             </div>
           </div>
@@ -460,10 +495,13 @@
           <div className="about-hero">
             <div className="about-intro">
               <p className="eyebrow">About Me</p>
-              <h2>Gameplay programmer building smarter game systems.</h2>
+              <h2>AI programmer, with gameplay systems as the proving ground.</h2>
               <p>
-                I am a gameplay programmer focused on AI, gameplay systems, and system-driven design.
-                My goal is to build robust, scalable, and well-structured architectures that support maintainable, extensible, and production-ready game systems.
+                AI in games is what I enjoy building most — enemy behaviour, decision logic,
+                reactive systems. Gameplay programming is the skill set that goes with it, and
+                it's also what keeps me employable across a wider range of studio roles. I've
+                built a few applications outside games too, and I'm genuinely interested in where
+                AI and software engineering overlap more broadly.
               </p>
 
               <div className="about-actions">
@@ -528,6 +566,56 @@
                 C++ fundamentals, portfolio presentation, and the discipline to finish
                 projects at a professional level.
               </p>
+            </div>
+          </div>
+
+          <div className="experience-section">
+            <div className="section-header">
+              <p className="eyebrow">Experience</p>
+              <h2>Where I've Worked</h2>
+            </div>
+
+            <div className="experience-item">
+              <div className="experience-header">
+                <h3>Unity Developer Intern</h3>
+                <span className="experience-dates">May – Aug 2026</span>
+              </div>
+              <p className="experience-company">Aden Interactive</p>
+              <p>
+                Completed a Unity developer internship, working on production workflow, gameplay
+                implementation, and debugging discipline in a real studio environment.
+              </p>
+
+              <div className="experience-subitem">
+                <h4>Graveyard Mansion</h4>
+                <p>
+                  Refactored core systems in a growing, multi-level codebase, led QA by tracing
+                  critical bugs back to root cause, and built an in-game debug tool for scene
+                  travel, dialogue control, and spawning inventory items on demand.
+                </p>
+                <a
+                  className="experience-link"
+                  href="projects/project8.html"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.open('projects/project8.html', '_blank');
+                  }}
+                >
+                  View Case Study →
+                </a>
+              </div>
+
+              <div className="experience-subitem">
+                <h4>Mobile Games</h4>
+                <p>
+                  Refined the experience on two mobile games by removing ad integrations and
+                  improving UI layout and usability.
+                </p>
+                <div className="experience-thumbs">
+                  <img src="assets/aden-mobile-games/screenshots/color-quiz-app.png" alt="Mobile game UI — colour quiz" />
+                  <img src="assets/aden-mobile-games/screenshots/which-is-ai-app.png" alt="Mobile game UI — spot the AI image" />
+                </div>
+              </div>
             </div>
           </div>
 
@@ -611,10 +699,11 @@
               <div className="timeline-item">
                 <span>Now</span>
                 <div>
-                  <h3>Building portfolio projects</h3>
+                  <h3>Open to opportunities</h3>
                   <p>
-                    Improving Table for Two, AI systems, Unreal prototypes, and the
-                    way each project is presented online.
+                    Just wrapped up a Unity developer internship at Aden Interactive. Building
+                    out my portfolio and open to AI / gameplay programming roles — still working
+                    out exactly where that lands next.
                   </p>
                 </div>
               </div>

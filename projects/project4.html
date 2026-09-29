@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <title>Pedra a Pedra — Museu Virtual da Calçada | Tiago Martins</title>
+  <title>Jester | Tiago Martins</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../styles.css">
@@ -19,52 +19,84 @@
 
     <!-- HEADER -->
     <div class="project-header">
-      <h1>Pedra a Pedra — Museu Virtual da Calçada</h1>
+      <h1>Jester</h1>
       <p class="project-subtitle">
-        A VR virtual museum dedicated to Portuguese calçada (traditional stone pavement) in the
-        Algarve, built with a multidisciplinary team of designers, artists, and producers.
+        A horror maze game built for Scream Game Jam 2025 — find the exit code while a clown
+        named Jester patrols the labyrinth, hunting by sight.
       </p>
 
       <div class="project-meta">
-        <span>Unity / VR</span>
+        <span>Unity / C#</span>
+        <span>AI Programmer</span>
         <span>Windows</span>
-        <span>Game Developer (VR) / Mechanics Engineer</span>
         <span>Released</span>
       </div>
     </div>
 
     <!-- ACTIONS -->
     <div class="project-detail-actions">
-      <a href="https://carolina-sousa.itch.io/museu-virtual-da-calcada" target="_blank">View on Itch.io</a>
+      <a href="https://carolina-sousa.itch.io/jester" target="_blank">Play on Itch.io</a>
     </div>
 
-    <!-- DESCRIPTION -->
+    <!-- HOW TO PLAY -->
+    <div class="project-section">
+      <h2>How to Play</h2>
+      <p>
+        Numbers are scattered across the walls and circus balls of the maze. Find them, work
+        out the right order, and use that code to unlock the exit — before Jester finds you.
+        Valves around the map drain the water to keep your movement speed up. Jester always
+        knows roughly where you are, so staying hidden matters as much as solving the puzzle.
+      </p>
+    </div>
+
+    <!-- OVERVIEW -->
     <div class="project-section">
       <h2>Overview</h2>
       <p>
-        Pedra a Pedra is a virtual reality museum exploring the history, craftsmanship, and
-        cultural value of Portuguese calçada — the traditional hand-laid stone pavement found
-        across the Algarve. It walks the user through the journey of the stone, from raw material
-        to its place in the street, using interviews, audiovisual recordings, images, and
-        interactive 3D elements to make the experience immersive rather than just informational.
-      </p>
-      <p>
-        The project sat at the intersection of design, digital communication, audiovisual
-        production, and 3D modelling, with a full multidisciplinary team behind it rather than
-        being a solo or programmer-only build.
+        Jester is a survival-horror maze game made in Unity for Scream Game Jam 2025, now in
+        continued development. The whole game hinges on one thing working well: Jester himself
+        needs to feel like a real threat that's actually watching for you, not a scripted timer
+        that jumpscares you at a fixed point.
       </p>
     </div>
 
     <div class="project-layout">
       <div class="project-main">
 
-        <!-- YOUR WORK -->
+        <!-- MY CONTRIBUTIONS -->
         <div class="project-section">
           <h2>My Contributions</h2>
+          <p>
+            As AI programmer, I built Jester end-to-end: his patrol, his detection, his reactions,
+            and the moment he catches you.
+          </p>
           <ul class="project-list">
-            <li>Built VR interaction and movement mechanics for exploring the museum space</li>
-            <li>Integrated 3D assets, audio, and video content into Unity for the interactive exhibits</li>
-            <li>Worked as the project's mechanics engineer within a larger, non-programming-heavy team</li>
+            <li>
+              <strong>Patrol &amp; checkpoints</strong> — Jester walks a set route between checkpoints
+              around the maze rather than standing still or following a fixed script, so his position
+              is never fully predictable.
+            </li>
+            <li>
+              <strong>Vision-based detection</strong> — Jester has an actual field of vision. He only
+              reacts to the player when he can see them, rather than knowing the player's position
+              unconditionally, which is what makes sneaking past him a real option instead of
+              impossible.
+            </li>
+            <li>
+              <strong>FSM with randomised behaviour</strong> — once Jester spots the player, an FSM
+              picks between three reactions — <em>flee</em>, <em>sneak</em>, or <em>attack</em> —
+              rather than always doing the same thing. That randomisation is what keeps a clown
+              enemy unsettling instead of predictable: you can't learn "he always does X" and
+              counter it.
+            </li>
+            <li>
+              <strong>Jumpscare on capture</strong> — when Jester catches the player, it triggers a
+              dedicated jumpscare sequence rather than just ending the run silently.
+            </li>
+            <li>
+              <strong>Animation &amp; sound integration</strong> — all of Jester's animations and
+              sound cues are wired up and working across his patrol, detection, and attack states.
+            </li>
           </ul>
         </div>
 
@@ -72,9 +104,9 @@
         <div class="project-section">
           <h2>Technical Focus</h2>
           <p>
-            VR locomotion and interaction, content integration pipeline (3D models, audio, video into
-            Unity), and building gameplay mechanics that support a first-person exploration experience
-            rather than combat or competition.
+            Finite state machines, vision/line-of-sight detection, randomised state selection for
+            unpredictable enemy behaviour, jumpscare sequencing, and animation/audio integration for
+            an AI-driven horror encounter.
           </p>
         </div>
 
@@ -82,14 +114,15 @@
         <div class="project-section">
           <h2>Team</h2>
           <ul class="project-list">
-            <li>Carolina Sousa — Project Manager, Tech Artist, 3D Artist</li>
-            <li>Tiago Martins — Game Developer (VR), Mechanics Engineer</li>
-            <li>Miguel Rebelo — 3D Props Artist</li>
-            <li>Beatriz Prazeres — Marketing &amp; Social Media, Script</li>
-            <li>Diogo Botelho — Visual Identity &amp; VR UI Designer</li>
-            <li>Alexandre Nunes — Sound Recording, Editing &amp; Production</li>
-            <li>João Pinheiro — Sound Recording, Editing &amp; Production</li>
-            <li>Sofia Andrade — Image Capture &amp; Editing</li>
+            <li>Carolina Sousa — Project Manager / UI-UX Designer / Game Tech-Artist</li>
+            <li>Rafael Alvarez — Lead Programmer / Character and Tools Programmer</li>
+            <li>Rafael Guerreiro — Sound Designer / Assistant Programmer / Assistant Game Designer</li>
+            <li>Inês Piedade — Concept Artist / Assistant Sound Designer</li>
+            <li>Pedro Leote — VFX Designer &amp; Artist</li>
+            <li>Sky Mendes — 3D Artist / UI-UX Assistant Programmer</li>
+            <li>Gustavo Sousa — 3D Artist</li>
+            <li>Tiago Martins — AI Programmer</li>
+            <li>Tiago Pereira — 3D Prop Artist</li>
           </ul>
         </div>
 
@@ -99,9 +132,9 @@
       <aside class="project-sidebar">
         <p class="sidebar-label">Screenshots</p>
         <div class="project-gallery">
-          <img src="../assets/pedra-a-pedra/screenshots/shot1.png" alt="Pedra a Pedra screenshot 1">
-          <img src="../assets/pedra-a-pedra/screenshots/shot2.png" alt="Pedra a Pedra screenshot 2">
-          <img src="../assets/pedra-a-pedra/screenshots/shot3.png" alt="Pedra a Pedra screenshot 3">
+          <img src="../assets/jester/screenshots/shot1.png" alt="Jester screenshot 1">
+          <img src="../assets/jester/screenshots/shot2.png" alt="Jester screenshot 2">
+          <img src="../assets/jester/screenshots/shot3.png" alt="Jester screenshot 3">
         </div>
       </aside>
     </div>
@@ -124,13 +157,17 @@
     });
   </script>
 
-  <!-- NOTE FOR TIAGO: pulled the description, tags, and team credits directly from the itch.io
-       page. The "My Contributions" list is inferred from your credited role (Game Developer VR /
-       Mechanics Engineer) since itch.io doesn't break down individual tasks — tighten this up
-       with what you actually built. Also swap the screenshot paths for real images (there are
-       gallery shots on the itch.io page you can download and drop into
-       assets/pedra-a-pedra/screenshots/), and add images/pedra-a-pedra.jpg for the project card
-       thumbnail on the main Projects page. -->
+  <!-- NOTE FOR TIAGO: description, credits, and "How to Play" pulled from the itch.io page.
+       The "My Contributions" section is written from what you told me directly (patrol +
+       checkpoints, vision-based detection, FSM with flee/sneak/attack, jumpscare on capture,
+       animations + sound) so that part should already be accurate — just sanity check it reads
+       the way you'd explain it out loud. Swap the screenshot paths for real images from the
+       itch.io gallery or your own captures, and add images/jester.png for the card thumbnail.
+
+       Also worth considering: this project has more real technical depth (vision detection,
+       randomised FSM states, jumpscare logic) than a typical "Other Project" entry — it could
+       hold its own as a third Featured Case Study if you want to expand it later with a
+       Problem/Approach/Result breakdown like Table for Two and Nexus of Warriors. -->
 
 </body>
 </html>

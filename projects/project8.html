@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Graveyard Mansion — Case Study | Tiago Martins</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+
+  <section class="project-page">
+
+    <!-- BACK -->
+    <a href="../index.html" class="back-link">← Back to Portfolio</a>
+
+    <!-- HEADER -->
+    <div class="project-header">
+      <span class="project-case-study-badge professional page-badge">Professional Work — Aden Interactive</span>
+      <h1>Graveyard Mansion</h1>
+      <p class="project-subtitle">
+        A top-down psychological survival horror game — my internship work at Aden Interactive
+        focused on stabilising the codebase and giving the team a faster way to test it.
+      </p>
+
+      <div class="project-meta">
+        <span>Unity / C#</span>
+        <span>QA &amp; Tools Programmer</span>
+        <span>Internship — Aden Interactive</span>
+      </div>
+    </div>
+
+    <!-- ROLE & SCOPE -->
+    <div class="case-scope">
+      <div>
+        <span>Role</span>
+        <strong>QA &amp; Tools Programmer (Intern)</strong>
+      </div>
+      <div>
+        <span>Studio</span>
+        <strong>Aden Interactive</strong>
+      </div>
+      <div>
+        <span>Focus</span>
+        <strong>Refactoring, QA, runtime debug tooling</strong>
+      </div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="project-detail-actions">
+      <a href="https://novacodes.itch.io/make-a-wish" target="_blank">View on Itch.io</a>
+    </div>
+
+    <!-- DEBUG TOOL DEMO -->
+    <div class="showreel-video">
+      <iframe
+        src="https://www.youtube.com/embed/rHAuq6L_P2U"
+        title="Graveyard Mansion — runtime debug tool demo"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <div class="project-layout">
+      <div class="project-main">
+
+        <!-- OVERVIEW -->
+        <div class="project-section">
+          <h2>Overview</h2>
+          <p>
+            Graveyard Mansion is a top-down psychological survival horror game combining
+            exploration, puzzles, and resource management across a multi-level mansion — from
+            the graveyard entrance through numbered floors, puzzle rooms, and character-specific
+            story levels. I joined the project as an intern focused on quality and tooling rather
+            than new features: making the existing game more stable, and making the team faster
+            at finding out when it wasn't.
+          </p>
+          <p>
+            This is a professional, team project owned by Aden Interactive — the write-up below
+            covers what I specifically built and contributed, not the game as a whole.
+          </p>
+        </div>
+
+        <!-- THE PROBLEM -->
+        <div class="case-block problem">
+          <span class="case-block-label">The Problem</span>
+          <h2>A growing codebase, and testing that cost too much time</h2>
+          <p>
+            Graveyard Mansion is a large game — the level list alone spans a graveyard, a mansion,
+            several character-specific story levels, and multiple mansion floors with their own
+            puzzle rooms. As the codebase grew, structure and reliability started slipping, and
+            game-breaking edge cases were surfacing during testing that took real time to track
+            down and reproduce.
+          </p>
+          <p>
+            The bigger cost, though, was iteration speed: testing a specific dialogue line or a
+            bug three floors into the mansion meant playing through the game from the start every
+            time. On a project this size, that's not a minor inconvenience — it's QA and design
+            work that never gets done because it's too slow to get to the part that matters.
+          </p>
+        </div>
+
+        <!-- MY APPROACH -->
+        <div class="case-block approach">
+          <span class="case-block-label">My Approach</span>
+          <h2>Fix the code, then fix how fast we can test it</h2>
+          <p>
+            I split the work into two halves. First, refactoring: going through the core codebase
+            to improve its structure and maintainability, so bugs were easier to isolate and fixes
+            were less likely to break something else. Alongside that, I led QA — systematically
+            identifying, reproducing, and resolving critical gameplay and system-level bugs rather
+            than fixing whatever surfaced first, which is what actually moved overall stability.
+          </p>
+          <p>
+            Second, and the part I'm most proud of: I built a runtime debug tool that runs inside
+            the game itself. It lets anyone on the team travel directly to any scene or level and
+            add inventory items on demand, instead of playing through the game from the start to
+            reach the moment or the item they need to test.
+          </p>
+          <p>
+            The dialogue controls specifically let a tester select and trigger any dialogue on
+            demand, then choose how it ends — and each ending state means something different for
+            testing. <strong>Skip</strong> moves past the current line without leaving the
+            conversation. <strong>Finish</strong> completes the whole dialogue and marks it as
+            read/checked, the same as if the player had gone through it naturally. <strong>Close</strong>
+            exits without finishing, leaving that dialogue in the state as if it had never been
+            triggered at all. That distinction mattered for QA: it let the team test both what
+            happens when a conversation is actually completed and what happens if a player backs
+            out of one mid-way, without needing to play through it twice to check both paths.
+          </p>
+        </div>
+
+        <!-- RESULT -->
+        <div class="case-block result">
+          <span class="case-block-label">Result</span>
+          <h2>A more stable game, and a team that could test it faster</h2>
+          <p>
+            The refactor and QA pass measurably improved game stability — fewer edge cases and
+            game-breaking issues made it into builds. The debug tool changed how the team tested
+            day to day: instead of every bug report requiring a full replay to reach a scene or
+            collect a specific item, anyone could travel straight there and reproduce it in
+            seconds, which is what actually made the QA process sustainable on a project this size.
+          </p>
+        </div>
+
+        <!-- YOUR WORK -->
+        <div class="project-section">
+          <h2>My Contributions</h2>
+          <ul class="project-list">
+            <li>Refactored core systems in a growing, multi-level codebase (graveyard, mansion floors, puzzle rooms, character story levels) to make bugs easier to isolate and fixes less likely to break something else</li>
+            <li>Led QA by systematically reproducing critical gameplay and system-level bugs back to their root cause, instead of patching whatever symptom surfaced first</li>
+            <li>Cut down game-breaking edge cases making it into builds by tracing those root causes rather than working around individual reports</li>
+            <li>Built an in-game debug tool letting any tester travel directly to any level, drive dialogue through Skip/Finish/Close states, and spawn inventory items on demand — turning a full replay into a seconds-long reproduction step</li>
+          </ul>
+        </div>
+
+        <!-- TECH FOCUS -->
+        <div class="project-section">
+          <h2>Technical Focus</h2>
+          <p>
+            Codebase refactoring, QA methodology, and in-editor/runtime tooling — building a debug
+            panel that exposes scene loading, dialogue state, and inventory/resources for fast,
+            repeatable testing.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- SCREENSHOTS -->
+      <aside class="project-sidebar">
+        <p class="sidebar-label">Screenshots</p>
+        <div class="project-gallery">
+          <img src="../assets/graveyard-mansion/screenshots/dialogue-system.png" alt="Graveyard Mansion dialogue system in-game">
+          <img src="../assets/graveyard-mansion/screenshots/debug-panel.png" alt="Runtime debug panel showing dialogue and scene controls">
+          <img src="../assets/graveyard-mansion/screenshots/debug-scene-list.png" alt="Debug panel scene list for jumping directly to any level">
+        </div>
+      </aside>
+    </div>
+
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <img id="lightbox-img" src="" alt="">
+  </div>
+  <script>
+    document.querySelectorAll('.project-gallery img').forEach((img) => {
+      img.addEventListener('click', () => {
+        document.getElementById('lightbox-img').src = img.src;
+        document.getElementById('lightbox').classList.add('active');
+      });
+    });
+    document.getElementById('lightbox').addEventListener('click', () => {
+      document.getElementById('lightbox').classList.remove('active');
+    });
+  </script>
+
+  <!-- NOTE FOR TIAGO: written directly from what you sent me (contributions list + screenshots),
+       so this should already be accurate — just double-check the itch.io link is the right page
+       for Graveyard Mansion specifically. Also worth a final confirmation from Aden/your tutor
+       that sharing these debug-panel screenshots publicly is fine before this goes live, since
+       it's studio work rather than a personal project.
+
+       Still needed: images/graveyard-mansion.png for the card thumbnail on Home/Projects
+       (a clean in-game screenshot, not a debug-panel one, works best there). -->
+
+</body>
+</html>

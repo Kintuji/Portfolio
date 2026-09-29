@@ -220,7 +220,7 @@ textarea {
 
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.3rem;
 }
 
@@ -245,7 +245,7 @@ textarea {
 
 .current-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.3rem;
 }
 
@@ -513,6 +513,17 @@ textarea {
   letter-spacing: 0.03em;
 }
 
+.project-case-study-badge.professional {
+  background: rgba(88, 214, 141, 0.18);
+  border: 1px solid rgba(88, 214, 141, 0.45);
+  color: #d3f5e2;
+}
+
+.project-case-study-badge.page-badge {
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+}
+
 /* OTHER PROJECTS (lighter, compact) */
 
 .other-projects-header {
@@ -757,6 +768,106 @@ textarea {
   margin: 0;
   color: var(--muted);
   line-height: 1.8;
+}
+
+/* EXPERIENCE */
+
+.experience-section {
+  margin-bottom: 5rem;
+}
+
+.experience-item {
+  padding: 1.8rem;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.025));
+  border: 1px solid var(--border);
+  box-shadow: 0 20px 60px var(--shadow);
+}
+
+.experience-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 0.3rem;
+}
+
+.experience-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.experience-dates {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.experience-company {
+  margin: 0 0 0.8rem;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.experience-item p:last-child {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.experience-subitem {
+  margin-top: 1.4rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--border);
+}
+
+.experience-subitem h4 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.experience-subitem p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.experience-link {
+  display: inline-flex;
+  margin-top: 0.7rem;
+  color: var(--primary);
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.experience-link:hover {
+  text-decoration: underline;
+}
+
+.experience-thumbs {
+  display: flex;
+  gap: 0.7rem;
+  margin-top: 0.9rem;
+}
+
+.experience-thumbs img {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+@media (max-width: 560px) {
+  .experience-thumbs img {
+    width: 80px;
+    height: 80px;
+  }
 }
 
 .skills-section {
