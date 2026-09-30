@@ -41,7 +41,7 @@
         house, one room per level. Mannequins patrol the dark, watching a 45° cone ahead of them;
         get seen and they'll come for you. Your flashlight is the answer to almost everything: hit
         a patrolling mannequin with it and it's blinded, but keep it on too long and you run out
-        of energy. In Level 1, you're hunting five hidden keys to open the way out — one of them
+        of energy. In Level 1, you're hunting six hidden keys to open the way out — one of them
         only appears if you notice a painting on the wall worth aiming your light at, revealing a
         secret door. Grab the last key and an NPC notices — a portal opens, and you're through to
         Level 2.
@@ -66,8 +66,7 @@
       </iframe>
     </div>
 
-    <div class="project-layout">
-      <div class="project-main">
+    <div class="project-main">
 
         <!-- OVERVIEW -->
         <div class="project-section">
@@ -103,7 +102,7 @@
               search-and-light puzzle.
             </li>
             <li>
-              <strong>Key &amp; objective system</strong> — built the five-key progression gate for
+              <strong>Key &amp; objective system</strong> — built the six-key progression gate for
               Level 1, including a hidden key that only unlocks once the player notices and aims
               their light at a specific painting to open a secret door.
             </li>
@@ -119,9 +118,10 @@
             </li>
             <li>
               <strong>Atmosphere &amp; performance</strong> — used post-processing and flickering
-              lights to build the horror tone, and implemented occlusion culling so the game only
-              renders what the camera can actually see, keeping a dark, effects-heavy scene
-              running smoothly.
+              lights to build the horror tone. On the optimisation side, I used occlusion culling
+              so the game only renders what the camera can actually see, and kept inactive levels
+              fully deactivated — while the player is in Level 1, Level 2 isn't loaded or running,
+              so the game is never spending resources on a room nobody's in.
             </li>
           </ul>
         </div>
@@ -132,46 +132,37 @@
           <p>
             State-machine patrol AI with vision-cone detection, a single resource-managed
             mechanic (the flashlight) driving two distinct puzzle systems, ranged combat, and
-            rendering optimisation through occlusion culling and post-processing.
+            rendering optimisation through occlusion culling, post-processing, and deactivating
+            levels that aren't currently in use.
           </p>
         </div>
 
-      </div>
-
-      <!-- SCREENSHOTS -->
-      <aside class="project-sidebar">
-        <p class="sidebar-label">Screenshots</p>
-        <div class="project-gallery">
-          <img src="../assets/level-of-dimensions/screenshots/shot1.png" alt="Level of Dimensions screenshot 1">
-          <img src="../assets/level-of-dimensions/screenshots/shot2.png" alt="Level of Dimensions screenshot 2">
-          <img src="../assets/level-of-dimensions/screenshots/shot3.png" alt="Level of Dimensions screenshot 3">
+        <!-- OCCLUSION DEMO -->
+        <div class="project-section">
+          <h2>Occlusion Culling in Action</h2>
+          <p>
+            A quick look at the occlusion culling doing its job — only what the camera can
+            actually see gets rendered.
+          </p>
+          <div class="showreel-video">
+            <iframe
+              src="https://www.youtube.com/embed/Y_u40uxMaj8"
+              title="Level of Dimensions — occlusion culling demo"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
         </div>
-      </aside>
+
     </div>
 
   </section>
 
-  <!-- LIGHTBOX -->
-  <div class="lightbox" id="lightbox">
-    <img id="lightbox-img" src="" alt="">
-  </div>
-  <script>
-    document.querySelectorAll('.project-gallery img').forEach((img) => {
-      img.addEventListener('click', () => {
-        document.getElementById('lightbox-img').src = img.src;
-        document.getElementById('lightbox').classList.add('active');
-      });
-    });
-    document.getElementById('lightbox').addEventListener('click', () => {
-      document.getElementById('lightbox').classList.remove('active');
-    });
-  </script>
-
   <!-- NOTE FOR TIAGO: written directly from your dictated description, so this should already
        be accurate — just sanity check the wording matches how you'd explain it out loud.
-       Still needed: real screenshots in assets/level-of-dimensions/screenshots/ (the gallery
-       paths are placeholders right now), and images/level-of-dimensions.png for the card
-       thumbnail on Home/Projects.
+       Still needed: images/level-of-dimensions.png for the card thumbnail on Home/Projects
+       (a still frame from the gameplay video works fine for that).
 
        Worth considering: this has as much real technical depth as your three Featured Case
        Studies (patrol AI, a dual-purpose core mechanic, combat, optimisation — solo). If you
