@@ -1186,6 +1186,51 @@ footer {
   margin-bottom: 0.5rem;
 }
 
+/* CODE SNIPPETS & TECHNICAL FIGURES */
+
+.code-block {
+  margin: 1rem 0;
+  padding: 1.2rem 1.4rem;
+  border-radius: 16px;
+  background: #0d1016;
+  border: 1px solid var(--border);
+  overflow-x: auto;
+}
+
+.code-block pre {
+  margin: 0;
+}
+
+.code-block code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: #cfe3ff;
+  white-space: pre;
+}
+
+.tech-figure {
+  margin: 1.4rem 0;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.tech-figure img {
+  display: block;
+  width: 100%;
+  cursor: pointer;
+}
+
+.tech-figure figcaption {
+  padding: 0.9rem 1.2rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  background: rgba(255,255,255,0.03);
+  border-top: 1px solid var(--border);
+}
+
 /* CASE STUDY BLOCKS */
 
 .case-scope {
@@ -1269,6 +1314,22 @@ footer {
 
 .case-block p:last-child {
   margin-bottom: 0;
+}
+
+.case-block h3 {
+  margin: 1.8rem 0 0.7rem;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+}
+
+.case-block p code,
+.project-section p code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.88em;
+  background: rgba(255,255,255,0.08);
+  padding: 0.12em 0.4em;
+  border-radius: 6px;
+  color: #cfe3ff;
 }
 
 .case-next {
@@ -1382,13 +1443,18 @@ footer {
   display: none;
   justify-content: center;
   align-items: center;
+  overflow: auto;
+  padding: 2vh 2vw;
   z-index: 999;
 }
 
 .lightbox img {
-  max-width: 90%;
-  max-height: 90%;
+  max-width: none;
+  width: auto;
+  height: auto;
+  min-width: min(100%, 1100px);
   border-radius: 10px;
+  cursor: zoom-out;
 }
 
 .lightbox.active {

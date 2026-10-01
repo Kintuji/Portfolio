@@ -173,6 +173,28 @@
         ],
         link: 'projects/project7.html',
       },
+      {
+        id: 'satans-miracle',
+        title: "Satan's Miracle",
+        image: 'images/satans-miracle.png',
+        status: 'Christmas Miracle Horror Jam',
+        role: 'AI Programmer',
+        focus: 'Layered AI — Behavior Tree execution, Utility AI decisions, Director AI pacing',
+        tags: ['Unity', 'C#', 'NodeCanvas', 'AI', 'Horror'],
+        featured: true,
+        description:
+          "A FNAF-style horror game with a twisted Christmas theme, hunted by five corrupted holiday creatures — enemy AI split across a Behavior Tree, Utility AI, and Director AI instead of one system doing everything.",
+        challenge:
+          "Five distinct enemies needed to feel like they were actually hunting the player, under a one-week jam deadline, without becoming five separate one-off AI systems.",
+        contributions: [
+          'Designed a layered AI architecture — Behavior Tree, Utility AI, Director AI — shared across five enemies',
+          'Built the probability-weighted advance/fake-footsteps/wait branch driving unpredictability',
+          'Built an event system bridging the Behavior Tree to GameManager and AudioManager without hard references',
+          'Diagnosed a subscription-lifecycle bug where events fired into listeners no longer subscribed',
+          'Continued and finished the AI after the rest of the team moved on post-jam'
+        ],
+        link: 'projects/project9.html',
+      },
     ];
 
     function Navigation({ page, onNavigate }) {

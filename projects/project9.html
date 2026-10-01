@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Satan's Miracle — Case Study | Tiago Martins</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+
+  <section class="project-page">
+
+    <!-- BACK -->
+    <a href="../index.html" class="back-link">← Back to Portfolio</a>
+
+    <!-- HEADER -->
+    <div class="project-header">
+      <h1>Satan's Miracle</h1>
+      <p class="project-subtitle">
+        A FNAF-style horror game with a twisted Christmas theme — survive the night while Satan,
+        a corrupted reindeer, imps, a snowman, and a cursed teddy bear hunt you. Built for
+        Christmas Miracle Horror Jam, with enemy AI split across a Behavior Tree, Utility AI, and
+        Director AI instead of one system doing everything.
+      </p>
+
+      <div class="project-meta">
+        <span>Unity / C#</span>
+        <span>NodeCanvas (Behavior Trees)</span>
+        <span>Christmas Miracle Horror Jam</span>
+      </div>
+    </div>
+
+    <!-- ROLE & SCOPE -->
+    <div class="case-scope">
+      <div>
+        <span>Role</span>
+        <strong>AI Programmer</strong>
+      </div>
+      <div>
+        <span>Team</span>
+        <strong>5-person jam team</strong>
+      </div>
+      <div>
+        <span>Focus</span>
+        <strong>Layered AI — Behavior Tree, Utility AI, Director AI</strong>
+      </div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="project-detail-actions">
+      <a href="https://vacponto.itch.io/satans-miracle" target="_blank">View on Itch.io</a>
+      <!-- REPO LINK GOES HERE once public — e.g.:
+      <a href="https://github.com/Kintuji/satans-miracle" target="_blank">View Code</a>
+      -->
+    </div>
+
+    <!-- VERSION NOTE -->
+    <div class="case-next">
+      <h3>Which version is which</h3>
+      <p>
+        The build on itch.io is the version the team shipped at the end of the jam. The Director
+        pacing, Utility AI scoring, and the event-bridge fix described below were built afterward,
+        in my own fork, after the rest of the team moved on — that's the code this case study is
+        actually about, not the itch.io build.
+      </p>
+    </div>
+
+    <!-- GAMEPLAY VIDEO -->
+    <!-- VIDEO LINK GOES HERE — paste it as: https://www.youtube.com/embed/VIDEO_ID -->
+    <div class="showreel-video">
+      <iframe
+        src=""
+        title="Satan's Miracle Gameplay"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <div class="project-main">
+
+      <!-- OVERVIEW -->
+      <div class="project-section">
+        <h2>Overview</h2>
+        <p>
+          Satan's Miracle is a first-person survival horror game in the Five Nights at Freddy's
+          mould, wrapped in a dark Christmas theme: trapped on a night that was supposed to be
+          magical, the player has to survive until morning while being hunted by corrupted
+          holiday creatures — Satan, a reindeer, imps, a snowman, and a cursed teddy bear. Limited
+          resources, reading enemy patterns, and reacting fast are the whole game; one mistake is
+          fatal.
+        </p>
+      </div>
+
+      <!-- OWNERSHIP NOTE -->
+      <div class="case-next">
+        <h3>Finishing what the team started</h3>
+        <p>
+          Satan's Miracle was built with a team of five for the jam. After the jam ended, the
+          rest of the team moved on to other things and the project stalled — but the AI was my
+          part, and I kept working on it until it was actually finished rather than leaving it at
+          jam-quality. The Behavior Tree, Utility AI, and Director AI layers described below are
+          the result of that follow-through, not just the 48-hour jam version.
+        </p>
+      </div>
+
+      <!-- THE PROBLEM -->
+      <div class="case-block problem">
+        <span class="case-block-label">The Problem</span>
+        <h2>Five different enemies need to feel smart, fast, under a jam deadline</h2>
+        <p>
+          A FNAF-style game lives or dies on enemies that feel like they're actually hunting you,
+          not running a fixed script. With five distinct creatures to drive and a one-week jam
+          clock running, the AI couldn't be hand-scripted per enemy — it needed a structure that
+          could support different behaviour without every enemy being its own one-off system.
+        </p>
+        <p>
+          On top of that, the AI couldn't live in isolation: it needed to tell the rest of the
+          game when something important happened — the player got caught in a flashlight beam, an
+          enemy reached its final step — without the Behavior Tree being hard-wired to specific
+          scripts like the GameManager or AudioManager.
+        </p>
+      </div>
+
+      <!-- MY APPROACH -->
+      <div class="case-block approach">
+        <span class="case-block-label">My Approach</span>
+        <h2>Three layers, each with one job</h2>
+        <p>
+          I split the AI into three layers instead of one. The <strong>Behavior Tree</strong>,
+          built in NodeCanvas, handles moment-to-moment execution — patrol, advance, retreat,
+          attack. <strong>Utility AI</strong> sits above it, scoring which action actually makes
+          sense right now instead of the tree following a fixed priority order.
+          <strong>Director AI</strong> sits above that again, ramping difficulty across the whole
+          night rather than per enemy, so the game gets tenser over time instead of every
+          encounter feeling the same. Below is the actual chain, end to end, with the real code
+          behind each step.
+        </p>
+
+        <h3>1. Gameplay reaches into the AI directly</h3>
+        <p>
+          The flashlight doesn't go through any event system — it raycasts forward every frame,
+          and if it hits an enemy's collider, it calls a method on that enemy directly. Tight
+          coupling here is the right call: there's only ever one flashlight and the specific
+          enemy it's pointing at, so an event bus would just add indirection for no benefit.
+        </p>
+        <div class="code-block">
+<pre><code>// LuzSegueMouseSimples.cs — the flashlight
+if (flashLight.enabled)
+{
+    if (Physics.Raycast(flashLight.transform.position, flashLight.transform.forward,
+        out RaycastHit hit, 10f))
+    {
+        if (hit.collider.GetComponent&lt;EnemyAI&gt;() != null)
+        {
+            EnemyAI enemy = hit.collider.GetComponent&lt;EnemyAI&gt;();
+            enemy.OnFlashed();
+        }
+    }
+}
+
+// EnemyAI.cs — the enemy being caught
+public void OnFlashed()
+{
+    flashed?.Invoke();
+    _blackboard.SetValue("AIState", 2); // Retreat
+}</code></pre>
+        </div>
+        <p>
+          The Behavior Tree never "hears" the flash as an event — it just checks
+          <code>AIState == 2</code> on the Blackboard, which is always correct no matter which
+          branch the tree happens to be evaluating that frame. Blackboard state over event
+          listeners was a deliberate choice after running into a real lifecycle issue earlier in
+          development: NodeCanvas's event-listener condition nodes only subscribe while that
+          exact branch is being actively ticked, so an event could fire while the tree was
+          elsewhere and simply be missed. Polling a Blackboard value sidesteps that entirely.
+        </p>
+
+        <h3>2. Director AI sets the pace</h3>
+        <p>
+          Once a frame, the Director ramps a difficulty multiplier up over an 8-minute night and
+          writes it into every enemy's Blackboard — throttled to roughly every 1.5 seconds so it's
+          not recalculating constantly for no reason.
+        </p>
+        <div class="code-block">
+<pre><code>// Director.cs
+float time = Mathf.Clamp((_currentGameTime / _gameTime), 0, 1); // _gameTime = 480s
+_gameTimeMultiplier = _nightDifficulty + Mathf.Lerp(0.2f, 2.2f, time);
+
+foreach (var bb in _aiBlackboards)
+{
+    bb.SetValue("NightDifficulty", _nightDifficulty);
+    bb.SetValue("GameTimeMultiplier", _gameTimeMultiplier);
+}</code></pre>
+        </div>
+
+        <h3>3. Utility AI turns that into a decision</h3>
+        <p>
+          Each enemy then scores its own options using the Director's numbers — how aggressively
+          to advance, how likely to fake a step, how likely to just wait — and writes those
+          scores back onto the Blackboard the Behavior Tree reads from.
+        </p>
+        <div class="code-block">
+<pre><code>// UtilityAI.cs
+float stepForwardScore = _baseAggression * GameTimeMultiplier * (step + 1);
+float fakeOutScore = (1 - nightDifficulty) * Random.Range(0.5f, 1.2f);
+float waitScore = Random.Range(0.1f, 0.3f);
+
+enemy.graph.blackboard.SetVariableValue("StepForwardScore", stepForwardScore);
+enemy.graph.blackboard.SetVariableValue("FakeOutScore", fakeOutScore);
+enemy.graph.blackboard.SetVariableValue("WaitScore", waitScore);</code></pre>
+        </div>
+        <p>
+          Those three variables are exactly what the tree's weighted-random selector reads from —
+          visible live on the Blackboard panel below as <code>StepForwardScore</code>,
+          <code>FakeOutScore</code>, and <code>WaitScore</code>. Early in the night, advancing
+          barely outweighs faking it; later, as <code>GameTimeMultiplier</code> climbs, advancing
+          dominates and the enemy gets noticeably more aggressive — without a single "if it's late
+          in the night, be more aggressive" line anywhere. That behaviour falls out of the scoring
+          on its own.
+        </p>
+        <div class="tech-figure">
+          <img
+            src="../assets/satans-miracle/screenshots/behavior-tree-blackboard.png"
+            alt="Satan's Miracle Behavior Tree with live Blackboard Variables panel"
+          />
+          <figcaption>
+            The enemy tree with the Blackboard panel open — <code>StepForwardScore</code>,
+            <code>FakeOutScore</code>, and <code>WaitScore</code> are the values Utility AI writes
+            every ~1.5 seconds, which the tree's weighted selector reads to choose a branch.
+          </figcaption>
+        </div>
+
+        <h3>4. The AI reaches back out to gameplay</h3>
+        <p>
+          When an enemy reaches its final step and holds it, a custom NodeCanvas task I wrote
+          fires a named event out of the tree, through a small event router, to whichever script
+          cares.
+        </p>
+        <div class="code-block">
+<pre><code>// BtGameEvents.cs — custom NodeCanvas ActionTask
+public class BtGameEvents : ActionTask
+{
+    public BBParameter&lt;string&gt; eventName;
+
+    protected override void OnExecute()
+    {
+        GameEvents.OnGameEvent(eventName.value, agent.gameObject);
+        EndAction();
+    }
+}
+
+// GameEvents.cs — the router
+public static class GameEvents
+{
+    static readonly Dictionary&lt;string, Action&lt;GameObject&gt;&gt; listeners = new();
+
+    public static void Subscribe(string eventName, Action&lt;GameObject&gt; handler) =&gt;
+        listeners[eventName] = listeners.TryGetValue(eventName, out var h) ? h + handler : handler;
+
+    public static void OnGameEvent(string eventName, GameObject source) =&gt;
+        listeners.TryGetValue(eventName, out var handler) ? handler?.Invoke(source) : null;
+}
+
+// GameManager.cs — the listener
+void OnEnable() =&gt; GameEvents.Subscribe("JumpScare", HandleJumpScareEvent);
+
+void HandleJumpScareEvent(GameObject source)
+{
+    // teleport enemy into the jumpscare position, disable its AI/collider,
+    // then reload the scene after a beat
+}</code></pre>
+        </div>
+        <p>
+          The tree never references GameManager directly — it just names an event. Any script can
+          subscribe to "JumpScare" without the Behavior Tree or any existing listener needing to
+          change at all.
+        </p>
+      </div>
+
+      <!-- RESULT -->
+      <div class="case-block result">
+        <span class="case-block-label">Result</span>
+        <h2>A layered AI system that actually shipped</h2>
+        <p>
+          Five different enemies share one architecture instead of five separate systems. The
+          Director's pacing and the Utility scoring mean the game gets harder over a session
+          without any enemy-specific difficulty code, and the game-over sequence plugs in through
+          a named event instead of a hard reference. The game is live and downloadable on itch.io.
+        </p>
+      </div>
+
+      <!-- MY CONTRIBUTIONS -->
+      <div class="project-section">
+        <h2>My Contributions</h2>
+        <ul class="project-list">
+          <li>Designed and built the layered AI architecture — Behavior Tree (execution), Utility AI (decision scoring), Director AI (session-wide pacing) — in NodeCanvas</li>
+          <li>Built the Director's difficulty ramp, scaling a game-time multiplier across an 8-minute night and feeding it to every enemy</li>
+          <li>Built the Utility AI scoring that turns the Director's pacing into per-enemy advance/fake-out/wait scores, read directly by the tree's weighted selector</li>
+          <li>Wrote a custom NodeCanvas ActionTask (<code>BtGameEvents</code>) and a small event router so the tree can trigger game-over without referencing GameManager directly</li>
+          <li>Wired the flashlight's direct hit-detection into the enemy's Blackboard state, after finding NodeCanvas's event-listener condition nodes had a subscription-lifecycle gap</li>
+          <li>Continued and finished the AI after the rest of the team moved on post-jam</li>
+        </ul>
+      </div>
+
+      <!-- TECH FOCUS -->
+      <div class="project-section">
+        <h2>Technical Focus</h2>
+        <p>
+          NodeCanvas Behavior Trees, Utility AI scoring driven by a time-based Director system,
+          Blackboard-based state over event listeners where polling is more reliable, a custom
+          ActionTask bridging the tree to a lightweight event router, and debugging a real
+          NodeCanvas node-lifecycle issue.
+        </p>
+      </div>
+
+      <!-- TEAM -->
+      <div class="project-section">
+        <h2>Team</h2>
+        <ul class="project-list">
+          <li>José Pedro — Lead Programmer</li>
+          <li>Tiago Martins — AI Programmer</li>
+          <li>Tiago Santos — Programmer, Menus, Cutscenes, 3D Models, Music/SFX</li>
+          <li>Miguel Rebelo — UI/UX</li>
+          <li>Tiago Pereira — 3D Models</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <img id="lightbox-img" src="" alt="">
+  </div>
+  <script>
+    document.querySelectorAll('.tech-figure img').forEach((img) => {
+      img.addEventListener('click', () => {
+        document.getElementById('lightbox-img').src = img.src;
+        document.getElementById('lightbox').classList.add('active');
+      });
+    });
+    document.getElementById('lightbox').addEventListener('click', () => {
+      document.getElementById('lightbox').classList.remove('active');
+    });
+  </script>
+
+  <!-- NOTE FOR TIAGO:
+       - REPO: added a commented-out "View Code" link next to the itch.io button, plus a note
+         right under the actions clarifying that the itch.io build is the jam version and the
+         code in this case study is from your fork. Send me the repo URL and I'll uncomment and
+         wire up the link.
+       - VIDEO: the iframe src above is empty — drop in https://www.youtube.com/embed/VIDEO_ID
+         as soon as you have the link. Ideally pair it with the debugger view as discussed, so
+         the tree's active node is visible reacting to gameplay in real time. No need to overlay
+         code in the video — it's already covered in text above, where it's easier to read.
+       - CODE: added 4 real snippets forming the full loop — flashlight→AI, Director→Blackboard,
+         Utility AI scoring, and the BT→GameEvents→GameManager bridge. Trimmed from your actual
+         files, so double-check nothing reads wrong once it's live — this is the part someone
+         will ask you to walk through in an interview.
+       - ONE THING TO FLAG: I framed the switch from event-listener detection to Blackboard-flag
+         detection as a response to the lifecycle issue you ran into. I'm fairly confident that's
+         what happened based on the two conversations, but I didn't get an explicit confirmation
+         from you that the causality is right — if it's not, let me know and I'll soften that line.
+       - SCREENSHOTS: the itch.io page has 5 real screenshots — worth downloading a couple and
+         adding a sidebar gallery like the other case studies, plus images/satans-miracle.png
+         for the card thumbnail. -->
+
+</body>
+</html>
