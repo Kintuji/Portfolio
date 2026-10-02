@@ -53,9 +53,7 @@
     <!-- ACTIONS -->
     <div class="project-detail-actions">
       <a href="https://vacponto.itch.io/satans-miracle" target="_blank">View on Itch.io</a>
-      <!-- REPO LINK GOES HERE once public — e.g.:
-      <a href="https://github.com/Kintuji/satans-miracle" target="_blank">View Code</a>
-      -->
+      <a href="https://github.com/Kintuji/Satans-Miracle" target="_blank">View Code</a>
     </div>
 
     <!-- VERSION NOTE -->
@@ -70,10 +68,9 @@
     </div>
 
     <!-- GAMEPLAY VIDEO -->
-    <!-- VIDEO LINK GOES HERE — paste it as: https://www.youtube.com/embed/VIDEO_ID -->
     <div class="showreel-video">
       <iframe
-        src=""
+        src="https://www.youtube.com/embed/HOzHWHMGTe8"
         title="Satan's Miracle Gameplay"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -351,14 +348,6 @@ void HandleJumpScareEvent(GameObject source)
   </script>
 
   <!-- NOTE FOR TIAGO:
-       - REPO: added a commented-out "View Code" link next to the itch.io button, plus a note
-         right under the actions clarifying that the itch.io build is the jam version and the
-         code in this case study is from your fork. Send me the repo URL and I'll uncomment and
-         wire up the link.
-       - VIDEO: the iframe src above is empty — drop in https://www.youtube.com/embed/VIDEO_ID
-         as soon as you have the link. Ideally pair it with the debugger view as discussed, so
-         the tree's active node is visible reacting to gameplay in real time. No need to overlay
-         code in the video — it's already covered in text above, where it's easier to read.
        - CODE: added 4 real snippets forming the full loop — flashlight→AI, Director→Blackboard,
          Utility AI scoring, and the BT→GameEvents→GameManager bridge. Trimmed from your actual
          files, so double-check nothing reads wrong once it's live — this is the part someone
